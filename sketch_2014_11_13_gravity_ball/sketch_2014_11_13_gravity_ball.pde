@@ -4,9 +4,9 @@ void setup() {
   size(800, 600);
   x = width/2;
   y = height*.1;
-  velX = 0;        //assign value for horizontal velocity
+  velX = 3;        //assign value for horizontal velocity
   velY = 0;        //assign value for vertical velocity
-  gravity = 1;     //assign value for gravity (vertical acceleration)
+  gravity = .1;     //assign value for gravity (vertical acceleration)
   textSize(30);
   //  noLoop();
 }
@@ -22,7 +22,11 @@ void draw() {
 
   if (y + sz/2 > height) {    //if ball hits bottom...
     y = height - sz/2;
-    velY = -abs(velY);        //...reverse vertical velocity
+    velX *= .9;         //...friction decreases the magnitude of horizontal velocity
+    velY *= -.7;        //...reverse vertical velocity
+  }
+  if (x + sz/2 > width || x - sz/2 < 0) {
+    velX *=-1;
   }
 }
 
