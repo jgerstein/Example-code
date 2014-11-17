@@ -5,7 +5,7 @@ float accx, accy;        //declare acceleration
 int sz = 50;
 
 void setup() {
-  colorMode(HSB,360,100,100,100);
+  colorMode(HSB, 360, 100, 100, 100);
   size(800, 600);
 
   //initialize location variables
@@ -17,19 +17,23 @@ void setup() {
   vely = 0;
 
   //initialize acceleration
-  accx = random(-.1,.1);
-  accy = random(-.1,.1);
+  accx = random(-.1, .1);
+  accy = random(-.1, .1);
 }
 
 void draw() {
-  fill(frameCount%360,100,100);
+  accx = random(-.1, .1);
+  accy = random(-.1, .1);
+
+  fill(frameCount%360, 100, 100);
+  stroke(frameCount%360, 100, 50);
   //add acceleration to velocity
   velx += accx;
   vely += accy;
-  
+
   //limit velocity to avoid going uncontrollably fast
-  velx = constrain(velx,-5,5);
-  vely = constrain(vely,-5,5);
+  velx = constrain(velx, -5, 5);
+  vely = constrain(vely, -5, 5);
 
   //add velocity to location
   locx += velx;
@@ -56,8 +60,3 @@ void draw() {
   }
 }
 
-//each time the mouse is pressed, pick new values for acceleration
-void mousePressed(){
-  accx = random(-.1,.1);
-  accy = random(-.1,.1);
-}
