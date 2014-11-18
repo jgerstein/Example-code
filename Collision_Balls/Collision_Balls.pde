@@ -1,5 +1,7 @@
+
+
 PVector loc, vel, acc;      //declare loc, vel, and acc
-PVector loc2;
+PVector loc2, vel2, acc2;
 int sz = 50;
 int sz2 = 100;
 float mag = 1;
@@ -11,14 +13,18 @@ void setup() {
   vel = PVector.random2D();                  //initialize velocity
   acc = new PVector();                       //initialize acceleration
   noStroke();
-  loc2 = new PVector(width/2, height/2);
+  loc2 = new PVector(width/4, height/4);
+  vel2 = PVector.random2D();
+  acc2 = new PVector();
 }
 
 void draw() {
-  loc2.set(mouseX, mouseY);
+
   background(0);
   vel.add(acc);                      //add acceleration to velocity
   loc.add(vel);                      //add velocity to location
+  vel2.add(acc2);
+  loc2.add(vel2);
   ellipse(loc.x, loc.y, sz, sz);     //draw an ellipse
   ellipse(loc2.x, loc2.y, sz2, sz2);
 
@@ -41,5 +47,26 @@ void draw() {
   if (loc.y + sz/2 < 0) {
     loc.y = height+sz/2;
   }
+  if (loc2.x -sz2/2 > width) {
+    loc2.x = -sz2/2;
+  }
+  if (loc2.x + sz2/2 < 0) {
+    loc2.x = width+sz2/2;
+  } 
+  if (loc2.y -sz2/2 > height) {
+    loc2.y = -sz2/2;
+  }
+  if (loc2.y + sz2/2 < 0) {
+    loc2.y = height+sz2/2;
+  }
+}
+
+void mousePressed() {
+  vel = PVector.random2D();
+  vel2 = PVector.random2D();
+}
+
+void keyPressed() {
+  loc2.set(mouseX, mouseY);
 }
 
