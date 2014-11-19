@@ -1,5 +1,6 @@
 //declare loc, vel, and acc
 PVector loc, vel, acc;
+PVector mouse;
 int sz = 70;
 
 void setup() {
@@ -9,18 +10,21 @@ void setup() {
   vel = PVector.random2D();    //random unit vector
   acc = new PVector(0, 0);
   noCursor();
+  mouse = new PVector();
 }
 
 void draw() {
+  mouse.set(mouseX,mouseY);
   background(0);
   //move the ball
   vel.add(acc);
   loc.add(vel);
 
   //check to see if the mouse is inside the circle
-  if (dist(mouseX, mouseY, loc.x, loc.y) < sz/2) {  //...if it is...
+  if (loc.dist(mouse) < sz/2) {  //...if it is...
     fill(255, 0, 0);                                //...fill with red
-  } else {                                            //...otherwise...
+    vel.mult(-1);                                   //...and reverse velocity
+  } else {                                          //...otherwise...
     fill(0, 200, 55);                               //...fill with green
   }
 
@@ -36,6 +40,6 @@ void draw() {
   }
 
   //draw a small circle to indicate mouse location
-  ellipse(mouseX, mouseY, 5, 5);
+  ellipse(mouse.x,mouse.y, 5, 5);
 }
 
