@@ -14,16 +14,25 @@ void setup() {
 }
 
 void draw() {
-  mouse.set(mouseX,mouseY);
+  mouse.set(mouseX, mouseY);
   background(0);
   //move the ball
   vel.add(acc);
   loc.add(vel);
 
   //check to see if the mouse is inside the circle
-  if (loc.dist(mouse) < sz/2) {  //...if it is...
-    fill(255, 0, 0);                                //...fill with red
-    vel.mult(-1);                                   //...and reverse velocity
+  if (loc.dist(mouse) < sz/2) { //...if it is...
+    fill(255, 0, 0);            //...fill with red
+    if (loc.x < mouse.x) {      //if ball is on the left...
+      vel.x = -abs(vel.x);      //...move it further left
+    } else {                    //otherwise...  
+      vel.x = abs(vel.x);       //...move it further right
+    }
+    if (loc.y < mouse.y) {      //And do the same for y
+      vel.y = -abs(vel.y);
+    } else {
+      vel.y = abs(vel.y);
+    }
   } else {                                          //...otherwise...
     fill(0, 200, 55);                               //...fill with green
   }
@@ -40,6 +49,6 @@ void draw() {
   }
 
   //draw a small circle to indicate mouse location
-  ellipse(mouse.x,mouse.y, 5, 5);
+  ellipse(mouse.x, mouse.y, 5, 5);
 }
 
