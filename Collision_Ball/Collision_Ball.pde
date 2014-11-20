@@ -1,67 +1,65 @@
-//declare loc, vel, and acc
-PVector loc, vel, acc;
-PVector loc2, vel2, acc2;
-int sz = 70;
-int sz2 = 200;
+int count = 100;
+//declare loc, vel, and acc arrays
+PVector[] loc = new PVector[count];
+PVector[] vel = new PVector[count];
+PVector[] acc = new PVector[count];
+float[] sz = new float[count];
 
 void setup() {
   size(800, 600);
-  //initialize loc, vel, and acc
-  loc = new PVector(width/2, height/2);
-  vel = PVector.random2D();    //random unit vector
-  acc = new PVector(0, 0);
-  loc2 = new PVector(width*.25, height*.25);
-  vel2 = PVector.random2D();
-  acc2 = new PVector(0, 0);
+  for (int i = 0; i < count; i++) {    //access each index in the arrays...
+    sz[i] = random(20, 40);           //initialize the values in sz[] array
+    loc[i] = new PVector(random(sz[i], width-sz[i]), random(sz[i], height-sz[i]));  //initialize values for location array
+    vel[i] = PVector.random2D();       //initialize values in velocity array
+    acc[i] = new PVector(0, 0);        //initialize values in acceleration array
+  }
 }
 
 void draw() {
   background(0);
-  //move the balls
-  vel.add(acc);
-  loc.add(vel);
-  vel2.add(acc2);
-  loc2.add(vel2);
 
-  //check to see if the circles are touching
-  if (loc.dist(loc2) < sz/2 + sz2/2) { //...if it is...
-    if (loc.x < loc2.x) {    //if ball 1 is on the left
-      vel.x = -abs(vel.x);
-      vel2.x = abs(vel2.x);
-    } else {
-      vel.x = abs(vel.x);
-      vel2.x = -abs(vel2.x);
+  for (int i = 0; i < count; i++) {    //access each index in the arrays...
+    //move the ball
+    vel[i].add(acc[i]);
+    loc[i].add(vel[i]);
+
+    //check to see if the circles are touching
+    for (int j = 0; j < count; j++) {
+      if (i!=j) {
+        if (loc[i].dist(loc[j]) < sz[i]/2 + sz[j]/2) { //...if it is...
+          print("COLLISION DETECTED    ");
+          if (loc[i].x < loc[j].x) {    //if ball 1 is to the left of ball 2...
+            vel[i].x = -abs(vel[i].x);
+            vel[j].x = abs(vel[j].x);
+          } else {
+            vel[i].x = abs(vel[i].x);
+            vel[j].x = -abs(vel[j].x);
+          }
+          if (loc[i].y < loc[j].y) {    //if ball 1 is to the left of ball 2...
+            vel[i].y = -abs(vel[i].y);
+            vel[j].y = abs(vel[j].y);
+          } else {
+            vel[i].y = abs(vel[i].y);
+            vel[j].y = -abs(vel[j].y);
+          }
+        }
+      }
     }
-    if (loc.y < loc2.y) {
-      vel.y = -abs(vel.y);
-      vel2.y = abs(vel2.y);
-    } else {
-      vel.y = abs(vel.y);
-      vel2.y = -abs(vel2.y);
+
+    //draw the ball
+    ellipse(loc[i].x, loc[i].y, sz[i], sz[i]);
+
+    //bounce the ball
+    if (loc[i].x + sz[i]/2 > width || loc[i].x - sz[i]/2 < 0) {
+      vel[i].x *= -1;
     }
-  }
-
-
-  //draw the ball
-  ellipse(loc.x, loc.y, sz, sz);
-  ellipse(loc2.x, loc2.y, sz2, sz2);
-
-  //bounce the ball
-  if (loc.x + sz/2 > width || loc.x - sz/2 < 0) {
-    vel.x *= -1;
-  }
-  if (loc.y + sz/2 > height || loc.y - sz/2 < 0) {
-    vel.y *= -1;
-  }
-  if (loc2.x + sz2/2 > width || loc2.x - sz2/2 < 0) {
-    vel2.x *= -1;
-  }
-  if (loc2.y + sz2/2 > height || loc2.y - sz2/2 < 0) {
-    vel2.y *= -1;
+    if (loc[i].y + sz[i]/2 > height || loc[i].y - sz[i]/2 < 0) {
+      vel[i].y *= -1;
+    }
   }
 }
 
 void mouseReleased() {
-  loc2.set(mouseX, mouseY);
+  loc[0].set(mouseX, mouseY);
 }
 
