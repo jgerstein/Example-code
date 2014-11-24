@@ -4,14 +4,18 @@ PVector[] loc = new PVector[count];
 PVector[] vel = new PVector[count];
 PVector[] acc = new PVector[count];
 float[] sz = new float[count];
+float[] mass = new float[count];
+int minDiam = 10;
+int maxDiam = 60;
 
 void setup() {
   size(800, 600);
   for (int i = 0; i < count; i++) {    //access each index in the arrays...
-    sz[i] = random(20, 40);           //initialize the values in sz[] array
+    sz[i] = random(minDiam, maxDiam);   //initialize the values in sz[] array
     loc[i] = new PVector(random(sz[i], width-sz[i]), random(sz[i], height-sz[i]));  //initialize values for location array
     vel[i] = PVector.random2D();       //initialize values in velocity array
     acc[i] = new PVector(0, 0);        //initialize values in acceleration array
+    mass[i] = map(sz[i], minDiam, maxDiam, .1, 1.5);
   }
 }
 
@@ -28,20 +32,23 @@ void draw() {
       if (i!=j) {
         if (loc[i].dist(loc[j]) < sz[i]/2 + sz[j]/2) { //...if it is...
           print("COLLISION DETECTED    ");
-          if (loc[i].x < loc[j].x) {    //if ball 1 is to the left of ball 2...
-            vel[i].x = -abs(vel[i].x);
-            vel[j].x = abs(vel[j].x);
-          } else {
-            vel[i].x = abs(vel[i].x);
-            vel[j].x = -abs(vel[j].x);
-          }
-          if (loc[i].y < loc[j].y) {    //if ball 1 is to the left of ball 2...
-            vel[i].y = -abs(vel[i].y);
-            vel[j].y = abs(vel[j].y);
-          } else {
-            vel[i].y = abs(vel[i].y);
-            vel[j].y = -abs(vel[j].y);
-          }
+          //          if (loc[i].x < loc[j].x) {    //if ball 1 is to the left of ball 2...
+          //            vel[i].x = -abs(vel[i].x);
+          //            vel[j].x = abs(vel[j].x);
+          //          } else {
+          //            vel[i].x = abs(vel[i].x);
+          //            vel[j].x = -abs(vel[j].x);
+          //          }
+          //          if (loc[i].y < loc[j].y) {    //if ball 1 is to the left of ball 2...
+          //            vel[i].y = -abs(vel[i].y);
+          //            vel[j].y = abs(vel[j].y);
+          //          } else {
+          //            vel[i].y = abs(vel[i].y);
+          //            vel[j].y = -abs(vel[j].y);
+          //          }
+          vel[i] = PVector.sub(loc[i], loc[j]);      //assign velocity a value based on difference between center points
+          vel[i].normalize();                        //normalize velocity
+          vel[i].div(mass[i]);                       //divide velocity by mass
         }
       }
     }
