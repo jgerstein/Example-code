@@ -1,32 +1,39 @@
 //declare variables
-PVector loc, vel, acc;
-int sz;
+int count = 200;
+PVector[] loc = new PVector[count];
+PVector[] vel = new PVector[count];
+PVector[] acc = new PVector[count];
+float[] sz = new float[count];
 
 void setup() {
   size(800, 600);
   //initialize variables
-  sz = 5;
-  loc = new PVector(random(width),-sz/2);
-  vel = new PVector(0, 1);
-  acc = new PVector(0, .01);
+  for (int i = 0; i < count; i++) {
+    sz[i] = random(2, 8);
+    loc[i] = new PVector(random(width), random(-height, -sz[i]/2));
+    vel[i] = new PVector(0, random(1));
+    acc[i] = new PVector(0, .01);
+  }
   noStroke();
   fill(255, 200);
 }
 
 void draw() {
   background(0, 20, 50);
-  //move snowflake
-  vel.add(acc);
-  loc.add(vel);
-  vel.limit(3);
-  //draw snowflake
-  ellipse(loc.x, loc.y, sz, sz);
-  //change horizontal acceleration
-  acc.x = random(-.1, .1);
-  //restart snowflake
-  if (loc.y - sz/2 > height) {
-    loc.set(random(width),-sz/2);
-    vel.set(0,1);
+  for (int i = 0; i < count; i++) {
+    //move snowflake
+    vel[i].add(acc[i]);
+    loc[i].add(vel[i]);
+    vel[i].limit(3);
+    //draw snowflake
+    ellipse(loc[i].x, loc[i].y, sz[i], sz[i]);
+    //change horizontal acceleration
+    acc[i].x = random(-.1, .1);
+    //restart snowflake
+    if (loc[i].y - sz[i]/2 > height) {
+      loc[i].set(random(width), random(-height, -sz[i]/2));
+      vel[i].set(0, 1);
+    }
   }
 }
 
