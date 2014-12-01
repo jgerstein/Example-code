@@ -1,0 +1,9 @@
+*class - complex data type containing both values and methods
+
+*object - an instance of a class
+
+*property - variable contained by a class
+
+*method - function of a class
+
+*constructor - initialize an individual object of a class
