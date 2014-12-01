@@ -11,10 +11,10 @@ void setup() {
 void draw() {
   background(0, 0, 100);
   //The following code calls the methods of exampleObject
-//  exampleObject.move();
-//  exampleObject.bounce();
-//  exampleObject.colorShift();
-//  exampleObject.colorFlash();
-//  exampleObject.display();
+  exampleObject.move();
+  exampleObject.bounce();
+  exampleObject.colorShift();
+  //  exampleObject.colorFlash();
+  exampleObject.display();
 }
 

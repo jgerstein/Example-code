@@ -1,4 +1,3 @@
-
 class ExampleClass {
   PVector loc, vel, acc; 
   float sz;
