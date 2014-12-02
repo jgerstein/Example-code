@@ -1,19 +1,24 @@
-//declare the first GravityBall
-GravityBall g;
-int sara;
+//declare and initialize the GravityBall array
+GravityBall[] g = new GravityBall[100];
+//float[] numbers = new float[100];    //this is here for comparison
 
 void setup() {
   size(800, 600);
-  //initialize the GravityBall
-  g = new GravityBall();
-  sara = 16;
+  //for each individual spot in the array, declare a new GravityBall
+  for (int i = 0; i < g.length; i++) {
+    g[i] = new GravityBall();
+    //  numbers[i] = random(100);      //this is here for comparison
+  }
 }
 
 void draw() {
   background(0);
-  g.display();
-  g.move();
-  g.bounce();
+  //go through the array, and call the methods I want on each GravityBall
+  for (int i = 0; i < g.length; i++) {
+    g[i].display();
+    g[i].move();
+    g[i].bounce();
+  }
 }
 
 
