@@ -1,29 +1,19 @@
 //declare the first GravityBall
-GravityBall nadia;
-GravityBall chris;
-GravityBall brendan;
+GravityBall g;
 int sara;
 
 void setup() {
   size(800, 600);
   //initialize the GravityBall
-  nadia = new GravityBall();
-  chris = new GravityBall();
-  brendan = new GravityBall();
+  g = new GravityBall();
   sara = 16;
 }
 
 void draw() {
   background(0);
-  nadia.display();
-  nadia.move();
-  nadia.bounce();
-  chris.display();
-  chris.move();
-  chris.bounce();
-  brendan.display();
-  brendan.move();
-  brendan.bounce();
+  g.display();
+  g.move();
+  g.bounce();
 }
 
 
