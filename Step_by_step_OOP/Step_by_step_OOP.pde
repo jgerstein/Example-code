@@ -4,10 +4,10 @@ GravityBall[] g = new GravityBall[100];
 
 void setup() {
   size(800, 600);
-  colorMode(HSB,360,100,100,100);
+  colorMode(HSB, 360, 100, 100, 100);
   //for each individual spot in the array, declare a new GravityBall
   for (int i = 0; i < g.length; i++) {
-    g[i] = new GravityBall();
+    g[i] = new GravityBall(map(i, 0, g.length, 0, width), 2*i+5);
     //  numbers[i] = random(100);      //this is here for comparison
   }
 }
@@ -42,7 +42,8 @@ class GravityBall {
   //declare variables
   PVector loc, vel, acc;
   float sz;
-  float hue,sat,bright,alpha;
+  float hue, sat, bright, alpha;
+
 
   //fill in the template with actual values
   //create a constructor
@@ -50,6 +51,18 @@ class GravityBall {
     //inside here, we initialize variables and run any code that should occur at the moment the object is created
     sz = 50;
     loc = new PVector(random(sz, width-sz), random(height/2));
+    vel = new PVector(0, 0);
+    acc = new PVector(0, .1);
+    hue = random(360);
+    sat = 100;
+    bright = 100;
+    alpha = 70;
+  }
+  //create an alternate constructor, which lets me control values of the ball
+  GravityBall(float tempx, float tempsz) {
+    sz = tempsz;
+
+    loc = new PVector(tempx, sz);
     vel = new PVector(0, 0);
     acc = new PVector(0, .1);
     hue = random(360);
@@ -66,7 +79,7 @@ class GravityBall {
 
   void display() {
     //display the ball
-    fill(hue,sat,bright,alpha);
+    fill(hue, sat, bright, alpha);
     ellipse(loc.x, loc.y, sz, sz);
   }
 
