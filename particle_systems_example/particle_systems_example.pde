@@ -6,18 +6,20 @@ ArrayList<Particle> allMyParticles = new ArrayList<Particle>();
 void setup() {
   noStroke();
   size(800, 600);
- 
 }
 
 void draw() {
-  if(mousePressed){
-   allMyParticles.add(new Particle()); 
+  if (mousePressed) {
+    allMyParticles.add(new Particle());
   }
   background(0);
-  for (int i = 0; i < allMyParticles.size(); i++) {
+  for (int i = allMyParticles.size()-1; i >= 0; i--) {
     Particle currentParticle = allMyParticles.get(i);
     currentParticle.display();
     currentParticle.move();
+    if (currentParticle.loc.y > height + currentParticle.sz/2) {
+      allMyParticles.remove(i);
+    }
   }
 }
 
