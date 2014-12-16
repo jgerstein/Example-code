@@ -1,21 +1,23 @@
 //behavior of fireworks
 //particles go up and out, then come back down
 
-Particle[] allMyParticles = new Particle[300];
+ArrayList<Particle> allMyParticles = new ArrayList<Particle>();
 
 void setup() {
   noStroke();
   size(800, 600);
-  for (int i = 0; i < allMyParticles.length; i++) {
-    allMyParticles[i] = new Particle();
-  }
+ 
 }
 
 void draw() {
+  if(mousePressed){
+   allMyParticles.add(new Particle()); 
+  }
   background(0);
-  for (int i = 0; i < allMyParticles.length; i++) {
-    allMyParticles[i].display();
-    allMyParticles[i].move();
+  for (int i = 0; i < allMyParticles.size(); i++) {
+    Particle currentParticle = allMyParticles.get(i);
+    currentParticle.display();
+    currentParticle.move();
   }
 }
 
