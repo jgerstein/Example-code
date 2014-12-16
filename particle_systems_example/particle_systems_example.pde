@@ -13,11 +13,11 @@ void draw() {
     allMyParticles.add(new Particle());
   }
   background(0);
-  for (int i = allMyParticles.size()-1; i >= 0; i--) {
+  for (int i = allMyParticles.size ()-1; i >= 0; i--) {
     Particle currentParticle = allMyParticles.get(i);
     currentParticle.display();
     currentParticle.move();
-    if (currentParticle.loc.y > height + currentParticle.sz/2) {
+    if (currentParticle.isDead()) {
       allMyParticles.remove(i);
     }
   }
@@ -41,6 +41,14 @@ class Particle {
   void move() {
     vel.add(acc);
     loc.add(vel);
+  }
+
+  boolean isDead() {
+    if (loc.y -sz/2 > height) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
